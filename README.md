@@ -50,4 +50,6 @@ We plan on using an Agile methodology during the creation of this project
 
 ### Project Tracking Software:
 We will be using Trello to track our progress
-https://trello.com/methodsproject
+https://trello.com/methodsproject  
+### Project Plan  
+http://i.imgur.com/8IBdJKR.png
