@@ -1,10 +1,10 @@
 # CSCI3308_Project
 
 ### Who:
-Joshua Zepf
-Devon Jones
-Griffin Smith
-Harry Hinch
+Joshua Zepf  
+Devon Jones  
+Griffin Smith  
+Harry Hinch  
 
 ### Title: 
 /r/EarthPorn Visualizer
