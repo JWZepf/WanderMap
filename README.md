@@ -7,7 +7,7 @@ Griffin Smith
 Harry Hinch  
 
 ### Title: 
-/r/EarthPorn Visualizer
+WanderMap
 
 ### Description:
 This will pull off top images from reddit.com/r/EarthPorn and display them on a world map based on their location. Users can click on dots/pins to display the image in that location. 
