@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load gmapify %}
+
+{% block content %}
+
+<p> Wandermap! </p>
+<div id="map-canvas" class="mapstyle"></div>
+
+{% endblock %}
+
+{% block js %}
+{% gmapify "map-canvas" 40.0070989 -105.2657439 zoom=3 marker_title="CU Boulder" %}
+{% endblock js %}
