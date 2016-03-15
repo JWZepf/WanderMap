@@ -1,0 +1,7 @@
+# things to exclude from commits:
+
+# python byte code
+*.pyc
+
+# venv -- used when running heroku local web
+venv/
