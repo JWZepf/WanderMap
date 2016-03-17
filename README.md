@@ -5,6 +5,7 @@ Joshua Zepf
 Devon Jones  
 Griffin Smith  
 Harry Hinch  
+Landon Ledbetter
 
 ### Title: 
 WanderMap
