@@ -17,3 +17,39 @@ for submission in subreddit.get_hot(limit = 25): # Get the top 25 hot posts
     print ("---------------------------------\n")
     '''
 print (array[5])
+
+'''
+import os
+import time
+import re
+import string
+#nltk.data.path.append('path_to_nltk_data')
+#import geograpy
+
+import praw
+from array import *
+
+user_agent = ("PyEng Bot 0.1")
+
+r = praw.Reddit(user_agent = user_agent)
+
+r.login(os.environ['REDDIT_USER'], os.environ['REDDIT_PASS'])
+
+subreddit = r.get_subreddit("EarthPorn")
+
+while True:
+	for submission in subreddit.get_hot(limit=50):
+		value = submission.title
+		value1 = ''.join(value)
+		output = re.sub("[\(\[].*?[\)\]]", "", value1, flags=re.MULTILINE)
+		output.strip()
+		# from geopy.geocoders import Nominatim
+		# geolocator = Nominatim()
+		# location = geolocator.geocode(output)
+		# places = geograpy.get_place_context(output = output)
+		# print(places)
+		# print(location.latitude, location.longitude)
+		# print(location.address)
+		print(output)
+	time.sleep(30)
+'''
