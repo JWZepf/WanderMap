@@ -5,3 +5,6 @@
 
 # venv -- used when running heroku local web
 venv/
+
+# static files, generated on python manage.py collectstatic ???
+static/
