@@ -69,10 +69,20 @@
 <!----------------------------------------------------------------------->
 <!-- Main map content: -->
 <!----------------------------------------------------------------------->
-<div id="map-canvas" class="mapstyle"></div>
-
+<div id="map" class="mapstyle"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCazSLTdKVrS-Z8ZaAH7jM0EEpntQPHFTA&callback=initMap"
+    async defer></script>
 {% endblock %}
 
 {% block js %}
+<script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 40.0070989, lng: -105.2657439},
+          zoom: 10
+        });
+      }
+</script>
 <!--gmapify "map-canvas" 40.0070989 -105.2657439 zoom=3 map_type="HYBRID" marker_title="CU Boulder"-->
 {% endblock js %}
