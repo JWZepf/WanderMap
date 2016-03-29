@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{% load gmapify %}
 
 
 {% block css %}
 .mapstyle {
 	width: 100%;
 	height: 800px;
+}
+
+.image-in-modal {
+	width: 100%;
 }
 {% endblock %}
 
@@ -70,10 +73,60 @@
 <!----------------------------------------------------------------------->
 <!-- Main map content: -->
 <!----------------------------------------------------------------------->
-<div id="map-canvas" class="mapstyle"></div>
+<div id="map" class="mapstyle"></div>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCazSLTdKVrS-Z8ZaAH7jM0EEpntQPHFTA&callback=initMap" async defer></script>
+<!-- Here's a template I made for a modal, which pops down and shows the user the picture
+	 You gotta change the html within javascript, otherwise you'll have some default junk as shown: -->
+<div class="modal fade image-modal" id="image-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+		<div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="image-modal-title">No title specified :(</h4>
+      </div>
+      <img src="http://i.imgur.com/EAFOC.jpg" id="imgmodal" class="image-in-modal"/>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block js %}
-{% gmapify "map-canvas" 40.0070989 -105.2657439 zoom=3 map_type="HYBRID" marker_title="CU Boulder" %}
+<script>
+      var map, marker, title, shorttitle, linkto, imgsrc;
+      function initMap() { 
+		
+		coordinates = {lat: {{ lat }}, lng: {{ lng }}};
+		title = "{{ title }}";
+		linkto = "{{ linkto }}";
+		shorttitle = "{{ shorttitle }}";
+		imgsrc = "{{ imgsrc }}";
+		
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: coordinates,
+          mapTypeId: google.maps.MapTypeId.HYBRID,
+          zoom: 4
+        });
+        
+		marker = new google.maps.Marker({
+		  position: coordinates,
+		  map: map,
+		  animation: google.maps.Animation.DROP,
+		  title: shorttitle
+		  
+		});
+		marker.addListener('click', showPhoto);
+      }
+      
+      function showPhoto() {
+		  $('#image-modal').modal('show');
+		  var s = "<a href=" + imgsrc + "><span class=\"glyphicon glyphicon-fullscreen\""
+		  + "aria-label=\"full size image\"></span></a>" // little fullscreen icon that will give them link to picture
+		  + "&nbsp;&nbsp;<b>" + title + "</b>&nbsp;&nbsp;" + // Bold title of the reddit post (or whatever title we end up wanting)
+		  "<a href=" + linkto + ">View this on Reddit</a>"; // and finally a link to the specific post on reddit
+		  document.getElementById("image-modal-title").innerHTML = s;
+		  document.getElementById("imgmodal").src = imgsrc;
+		}
+      
+</script>
 {% endblock js %}
