@@ -2,74 +2,7 @@
 {% load staticfiles %}
 
 
-{% block css %}
-.mapstyle {
-	width: 100%;
-	height: 800px;
-}
-
-.image-in-modal {
-	width: 100%;
-}
-{% endblock %}
-
-
-
 {% block content %}
-<!----------------------------------------------------------------------->
-<!-- Bootstrap's navigation bar: -->
-<!----------------------------------------------------------------------->
-<nav class="navbar navbar-default" style="margin-bottom:0px">
-  <div class="container-fluid">
-    <!-- 'wandermap' and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Wandermap</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">World<span class="sr-only">(current)</span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Show me.. <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Top 50</a></li>
-            <li><a href="#">Hot 50</a></li>
-            <li><a href="#">Newest 50</a></li>
-            <li><a href="#">Everything</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Places near...<span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="https://www.reddit.com/r/EarthPorn/">View the Subreddit</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
 <!----------------------------------------------------------------------->
 <!-- Main map content: -->
 <!----------------------------------------------------------------------->
@@ -93,40 +26,52 @@
 
 {% block js %}
 <script>
-      var map, marker, title, shorttitle, linkto, imgsrc;
+      var map;
+      
+      {% for this_marker in marker_list %}
+      var marker{{ this_marker.id }}, title{{ this_marker.id }};
+      var shorttitle{{ this_marker.id }}, linkto{{ this_marker.id }}, imgsrc{{ this_marker.id }};
+      {% endfor %}
+      
       function initMap() { 
 		
-		coordinates = {lat: {{ lat }}, lng: {{ lng }}};
-		title = "{{ title }}";
-		linkto = "{{ linkto }}";
-		shorttitle = "{{ shorttitle }}";
-		imgsrc = "{{ imgsrc }}";
-		
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: coordinates,
+		map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 0, lng: 0},
           mapTypeId: google.maps.MapTypeId.HYBRID,
-          zoom: 4
+          zoom: 2
         });
-        
-		marker = new google.maps.Marker({
+		
+		{% for this_marker in marker_list %}
+		
+		coordinates = {lat: {{ this_marker.latitude }}, lng: {{ this_marker.longitude }}};
+		title{{ this_marker.id }} = "{{ this_marker.longTitle }}";
+		linkto{{ this_marker.id }} = "{{ this_marker.redditLink }}";
+		shorttitle{{ this_marker.id }} = "{{ this_marker.shortTitle }}";
+		imgsrc{{ this_marker.id }} = "{{ this_marker.imageLink }}";
+		
+		marker{{ this_marker.id }} = new google.maps.Marker({
 		  position: coordinates,
 		  map: map,
 		  animation: google.maps.Animation.DROP,
-		  title: shorttitle
+		  title: shorttitle{{ this_marker.id }}
 		  
 		});
-		marker.addListener('click', showPhoto);
+		marker{{ this_marker.id }}.addListener('click', showPhoto{{ this_marker.id }});
+		
+		{% endfor %}
       }
       
-      function showPhoto() {
+      {% for this_marker in marker_list %}
+      function showPhoto{{ this_marker.id }}() {
 		  $('#image-modal').modal('show');
-		  var s = "<a href=" + imgsrc + "><span class=\"glyphicon glyphicon-fullscreen\""
+		  var s = "<a href=" + imgsrc{{ this_marker.id }} + "><span class=\"glyphicon glyphicon-fullscreen\""
 		  + "aria-label=\"full size image\"></span></a>" // little fullscreen icon that will give them link to picture
-		  + "&nbsp;&nbsp;<b>" + title + "</b>&nbsp;&nbsp;" + // Bold title of the reddit post (or whatever title we end up wanting)
-		  "<a href=" + linkto + ">View this on Reddit</a>"; // and finally a link to the specific post on reddit
+		  + "&nbsp;&nbsp;<b>" + title{{ this_marker.id }} + "</b>&nbsp;&nbsp;" + // Bold title of the reddit post (or whatever title we end up wanting)
+		  "<a href=" + linkto{{ this_marker.id }} + ">View this on Reddit</a>"; // and finally a link to the specific post on reddit
 		  document.getElementById("image-modal-title").innerHTML = s;
-		  document.getElementById("imgmodal").src = imgsrc;
+		  document.getElementById("imgmodal").src = imgsrc{{ this_marker.id }};
 		}
+	  {% endfor %}
       
 </script>
 {% endblock js %}

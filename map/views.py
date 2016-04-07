@@ -2,7 +2,10 @@ import requests
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from .models import Marker
+
 def index(request):
+	'''
 	post = {
 		'lat': 39.2599775,
 		'lng': -107.1715559,
@@ -12,3 +15,7 @@ def index(request):
 		'imgsrc': 'http://i.imgur.com/DQdWvz2.jpg'
 	}
 	return render(request, 'index.html', post)
+	'''
+	marker_list = Marker.objects.all()[:5]
+	context = {'marker_list': marker_list}
+	return render(request, 'index.html', context)

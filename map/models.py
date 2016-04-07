@@ -14,3 +14,6 @@ class Marker(models.Model):
 	shortTitle = models.CharField(max_length=50)
 	redditLink = models.CharField(max_length=200)
 	imageLink = models.CharField(max_length=300)
+	def __str__(self):
+		return self.shortTitle + "(" + self.latitude + ", " + self.longitude + ")"
+
