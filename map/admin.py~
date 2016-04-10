@@ -8,6 +8,13 @@ import urllib
 import json
 from geopy.geocoders import Nominatim
 
+def pull_top(modeladmin, request):
+	for submission in subreddit.get_top(limit = 5,period = 'day'): # Get the top 25 hot posts
+		value = submission.title
+		url_text = submission.url
+		marker = Marker.objects.create(latitude = 'none', longitude = 'none', longTitle = value, shortTitle = 'none', redditLink = 'none', imageLink = url_text)
+		marker.save()
+
 class MarkerAdmin(admin.ModelAdmin):
 	list_display = ['shortTitle', 'latitude', 'longitude']
 	ordering = ['shortTitle']

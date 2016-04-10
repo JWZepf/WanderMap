@@ -29,7 +29,14 @@ for submission in subreddit.get_top(limit = 5,period = 'day'): # Get the top 25 
 	array.append(submission.title)
 	value = submission.title
 	url_text = submission.url
-	print (url_text)
+	value1 = ''.join(value)
+	output = re.sub("[\(\[].*?[\)\]]", "", value1, flags=re.MULTILINE)
+	output.strip()
+	print (output)
+	cordinates = locate(output)
+	print (cordinates[0])
+	print (cordinates[1])
+	print ("---------------------------------\n")
     
 
 '''
