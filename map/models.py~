@@ -16,7 +16,7 @@ class Marker(models.Model):
 	imageLink = models.CharField(max_length=300)
 	
 	# Timestamp doesn't need to go into the template, so it's the regular one:
-	time = models.DateTimeField(auto_now_add=True)
+	time = models.DateTimeField('date published')
 	def __str__(self):
 		return self.shortTitle + "(" + self.latitude + ", " + self.longitude + ")"
 

@@ -24,4 +24,5 @@ import map.views
 urlpatterns = [
     url(r'^$', include('map.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^admin/bot', map.views.bot, name='index'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
