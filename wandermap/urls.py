@@ -25,4 +25,11 @@ urlpatterns = [
     url(r'^$', include('map.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^admin/bot', map.views.bot, name='index'),
+    url(r'^accounts/login/$', map.views.login, name='index'),
+    url(r'^accounts/logout/$', map.views.logout, name='index'),
+    url(r'^accounts/loggedin/$', map.views.loggedin, name='index'),
+    url(r'^accounts/invalid/$', map.views.invalid_login, name='index'),
+    url(r'^accounts/auth/$', map.views.auth_view, name='index'),
+	url(r'^accounts/register/$', map.views.register_user, name='index'),
+	url(r'^accounts/register_success/$', map.views.register_success, name='index'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
