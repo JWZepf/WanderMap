@@ -22,7 +22,6 @@ from django.conf.urls.static import static
 import map.views
 
 urlpatterns = [
-    url(r'^$', include('map.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^admin/bot', map.views.bot, name='index'),
+    url(r'', include('map.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
