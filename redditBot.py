@@ -11,12 +11,12 @@ subreddit = r.get_subreddit("earthporn") # We are looking at /r/earthporn
 array = []
 for submission in subreddit.get_hot(limit = 25): # Get the top 25 hot posts
     array.append(submission.title)
-    
+
     print ("Title: ", submission.title)
     print ("Text: ", submission.selftext)
     print ("Score: ", submission.score)
     print ("---------------------------------\n")
-    
+
 print (array[5])
 '''
 import os
@@ -54,8 +54,11 @@ while True:
 		# location = geolocator.geocode(output)
 		# places = geograpy.get_place_context(output = output)
 		# print(places)
-		# print(location.latitude, location.longitude)
-		# print(location.address)
+		# print(location.latitude, location.longitude)#
+
+
+        print (domain)
+        print(location.address)
 		print(output)
 		print '[LOG] Getting url:  ' + url_text
 	time.sleep(30)
