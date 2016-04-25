@@ -5,6 +5,7 @@ from django.db import models
 # Create your models here.
 
 class Marker(models.Model):
+	
 	# most feilds are charfields (strings):
 	# https://docs.djangoproject.com/en/1.9/ref/models/fields/#charfield
 	# that way we can plug them directly into the javascript template
@@ -20,6 +21,9 @@ class Marker(models.Model):
 	
 	# Timestamp doesn't need to go into the template, so it's the regular one:
 	time = models.DateTimeField(auto_now_add=True)
+	class Meta:
+		app_label = 'map'
+
 	def __str__(self):
 		return self.shortTitle + "(" + self.latitude + ", " + self.longitude + ")"
 
